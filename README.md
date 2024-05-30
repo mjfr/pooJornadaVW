@@ -7,8 +7,8 @@ Esta aplicação foi criada com base no [documento](./POO%20%20Jornada%20-%20Atv
 ## Estrutura do Repositório <br>
 
 * `./POO Jornada - Atv 2º Bim complemento.pdf`: Documento com as exigências do projeto. <br>
-* `mysql-connector-java-x.x.xx-bin.jar`: Conector do MySQL. <br>
-* `script.sql`: Arquivo SQL para criar e popular as tabelas utilizadas. <br>
+* `./mysql-connector-java-x.x.xx-bin.jar`: Conector do MySQL. <br>
+* `./script.sql`: Arquivo SQL para criar e popular as tabelas utilizadas. <br>
 * `src/`: Diretório contendo os arquivos .java da aplicação. <br>
 
 <hr>
