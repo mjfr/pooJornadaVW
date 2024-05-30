@@ -15,7 +15,7 @@ Esta aplicação foi criada com base no [documento](./POO%20%20Jornada%20-%20Atv
 
 ## Requisitos
 
-* Java Development Kit (JDK) 8 ou superior
+* Java Development Kit (JDK) 21
 * MySQL Server
 * MySQL Connector/J
 * Configuração 
@@ -29,6 +29,8 @@ Importe o projeto em sua IDE de preferência (Eclipse, IntelliJ, etc.).
 Adicione o conector do MySQL ao classpath do seu projeto.
 
 Crie e popule as tabelas no MySQL utilizando o arquivo script.sql.
+
+<hr>
 
 ## Executando a Aplicação
 
