@@ -14,7 +14,7 @@ public abstract class AbstractController<T> {
     }
 
     // Métodos abaixo
-
+    // Método padrão para criar um registro de uma entidade
     public void create(T entity) {
         try {
             dao.create(entity);
@@ -24,6 +24,7 @@ public abstract class AbstractController<T> {
         }
     }
 
+    // Método padrão para ler todos os registros de uma entidade
     public List<T> readAll() {
         List<T> result = null;
         try {
@@ -35,6 +36,7 @@ public abstract class AbstractController<T> {
         return result;
     }
 
+    // Método padrão para ler um registro de uma entidade
     public T read(Date data_registro, byte linha_producao) {
         T result = null;
         try {
@@ -46,6 +48,7 @@ public abstract class AbstractController<T> {
         return result;
     }
 
+    // Método padrão para alterar um registro de uma entidade
     public void update(T entity) {
         try {
             dao.update(entity);
@@ -55,6 +58,7 @@ public abstract class AbstractController<T> {
         }
     }
 
+    // Método padrão para excluir um registro de uma entidade
     public void delete(T entity) {
         try {
             dao.delete(entity);

@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class Main {
+
+    // Método que cria instâncias dos DAOs e Controllers, estabelecendo uma conexão com o DB e retorna uma instância de Menu
     private static Menu getMenu(Connection connection) {
         ConsumoDao consumoDao = new ConsumoDao(connection);
         ProducaoDao producaoDao = new ProducaoDao(connection);
@@ -23,12 +25,18 @@ public class Main {
         return new Menu(consumoController, producaoController, objetivoConsumoMaxController);
     }
 
+    // Método principal da aplicação, executa tudo o que foi criado
     public static void main(String[] args) throws SQLException {
+        // Define a conexão do banco de dados
         Connection connection = ConnectionFactory.getConnection();
 
+        // Define o menu com a conexão criada
         Menu menu = getMenu(connection);
+
+        // Mostra o menu no terminal
         menu.showMainMenu();
 
+        // Se a conexão não for nula, fecha após a finalização do usuário
         if (connection != null) {
             connection.close();
             System.out.println("Conexão com o banco de dados encerrada com sucesso!");
