@@ -22,7 +22,7 @@ Esta aplicação foi criada com base no [documento](./POO%20%20Jornada%20-%20Atv
 
 Clone o repositório:
 
-```git clone https://github.com/seuusuario/pooJornadaVW.git```
+```git clone https://github.com/mjfr/pooJornadaVW.git```
 
 Importe o projeto em sua IDE de preferência (Eclipse, IntelliJ, etc.).
 
