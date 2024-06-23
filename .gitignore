@@ -2,6 +2,7 @@
 out/
 .idea
 pooJornadaVW.iml
+Nomes.txt
 !**/src/main/**/out/
 !**/src/test/**/out/
 
