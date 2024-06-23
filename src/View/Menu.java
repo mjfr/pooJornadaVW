@@ -14,13 +14,14 @@ import java.text.MessageFormat;
 import java.util.List;
 
 public class Menu {
-    private final ScannerValidation scannerValidation = new ScannerValidation();
+    private final ScannerValidation scannerValidation;
     private final ConsumoController consumoController;
     private final ProducaoController producaoController;
     private final ObjetivoConsumoMaxController objetivoConsumoMaxController;
 
     // Construtor que define os controllers que serão utilizados no menu
-    public Menu(ConsumoController consumoController, ProducaoController producaoController, ObjetivoConsumoMaxController objetivoConsumoMaxController) {
+    public Menu(ScannerValidation scannerValidation, ConsumoController consumoController, ProducaoController producaoController, ObjetivoConsumoMaxController objetivoConsumoMaxController) {
+        this.scannerValidation = scannerValidation;
         this.consumoController = consumoController;
         this.producaoController = producaoController;
         this.objetivoConsumoMaxController = objetivoConsumoMaxController;
@@ -46,7 +47,7 @@ public class Menu {
                 """
         );
         // Define o limite das opções, uma mensagem e qual o tipo de dado será recebido do input
-        int input = scannerValidation.validateByteScanner(0, 4, "Sua Escolha: ");
+        int input = this.scannerValidation.validateByteScanner(0, 4, "Sua Escolha: ");
 
         // Switch case para definir qual ação será tomada
         switch (input) {
@@ -86,7 +87,7 @@ public class Menu {
         );
 
         // Define o limite das opções, uma mensagem e qual o tipo de dado será recebido do input
-        int input = scannerValidation.validateByteScanner(0, 5, "Sua Escolha: ");
+        int input = this.scannerValidation.validateByteScanner(0, 5, "Sua Escolha: ");
         // Instancia um novo objeto de ObjectViewHelper
         ObjectViewHelper object = new ObjectViewHelper();
 
@@ -100,9 +101,9 @@ public class Menu {
             // Cadastra as entidades escolhidas
             case 1 -> {
                 // Valida o formato do tipo de dado digitado
-                Date reqDate = scannerValidation.validateSqlDateScanner("Data do consumo que deseja cadastrar: ");
+                Date reqDate = this.scannerValidation.validateSqlDateScanner("Data do consumo que deseja cadastrar: ");
                 // Valida os limites e o tipo de dados recebido do input
-                byte reqLinha_producao = scannerValidation.validateByteScanner(1, 100, "Linha de Produção do Consumo que deseja cadastrar: ");
+                byte reqLinha_producao = this.scannerValidation.validateByteScanner(1, 100, "Linha de Produção do Consumo que deseja cadastrar: ");
                 // Passa ao controller o objeto que será criado com as chaves primárias definidas previamente
                 consumoController.create(object.createConsumoObject(reqDate, reqLinha_producao));
                 // Mostra o mesmo menu novamente
@@ -110,9 +111,9 @@ public class Menu {
             }
             case 2 -> {
                 // Valida o formato do tipo de dado digitado
-                Date reqDate = scannerValidation.validateSqlDateScanner("Data do consumo que deseja cadastrar: ");
+                Date reqDate = this.scannerValidation.validateSqlDateScanner("Data do consumo que deseja cadastrar: ");
                 // Valida os limites e o tipo de dados recebido do input
-                byte reqLinha_producao = scannerValidation.validateByteScanner(1, 100, "Linha de Produção do Consumo que deseja cadastrar: ");
+                byte reqLinha_producao = this.scannerValidation.validateByteScanner(1, 100, "Linha de Produção do Consumo que deseja cadastrar: ");
                 // Passa ao controller o objeto que será criado com as chaves primárias definidas previamente
                 producaoController.create(object.createProducaoObject(reqDate, reqLinha_producao));
                 // Mostra o mesmo menu novamente
@@ -120,9 +121,9 @@ public class Menu {
             }
             case 3 -> {
                 // Valida o formato do tipo de dado digitado
-                Date reqDate = scannerValidation.validateSqlDateScanner("Data do consumo que deseja cadastrar: ");
+                Date reqDate = this.scannerValidation.validateSqlDateScanner("Data do consumo que deseja cadastrar: ");
                 // Valida os limites e o tipo de dados recebido do input
-                byte reqLinha_producao = scannerValidation.validateByteScanner(1, 100, "Linha de Produção do Consumo que deseja cadastrar: ");
+                byte reqLinha_producao = this.scannerValidation.validateByteScanner(1, 100, "Linha de Produção do Consumo que deseja cadastrar: ");
                 // Passa ao controller o objeto que será criado com as chaves primárias definidas previamente
                 objetivoConsumoMaxController.create(object.createObjetivoConsumoMaxObject(reqDate, reqLinha_producao));
                 // Mostra o mesmo menu novamente
@@ -131,9 +132,9 @@ public class Menu {
             // Cadastra todos os dados de todas as entidades em um fluxo único
             case 4 -> {
                 // Valida o formato do tipo de dado digitado
-                Date reqDate = scannerValidation.validateSqlDateScanner("Data do consumo que deseja cadastrar: ");
+                Date reqDate = this.scannerValidation.validateSqlDateScanner("Data do consumo que deseja cadastrar: ");
                 // Valida os limites e o tipo de dados recebido do input
-                byte reqLinha_producao = scannerValidation.validateByteScanner(1, 100, "Linha de Produção do Consumo que deseja cadastrar: ");
+                byte reqLinha_producao = this.scannerValidation.validateByteScanner(1, 100, "Linha de Produção do Consumo que deseja cadastrar: ");
                 // Passa ao controller o objeto que será criado com as chaves primárias definidas previamente
                 consumoController.create(object.createConsumoObject(reqDate, reqLinha_producao));
                 producaoController.create(object.createProducaoObject(reqDate, reqLinha_producao));
@@ -170,7 +171,7 @@ public class Menu {
         );
 
         // Define o limite das opções, uma mensagem e qual o tipo de dado será recebido do input
-        int input = scannerValidation.validateByteScanner(0, 7, "Sua Escolha: ");
+        int input = this.scannerValidation.validateByteScanner(0, 7, "Sua Escolha: ");
 
         // Switch case para definir qual ação será tomada
         switch (input) {
@@ -182,7 +183,7 @@ public class Menu {
             // Realiza as buscas específicas ou gerais
             case 1 -> {
                 // Realiza uma busca utilizando as chaves primárias da entidade e a retorna em seu específico objeto
-                Consumo consumo = consumoController.read(scannerValidation.validateSqlDateScanner("Digite a Data: "), scannerValidation.validateByteScanner(0, 100, "Digite a Linha de Produção: "));
+                Consumo consumo = consumoController.read(this.scannerValidation.validateSqlDateScanner("Digite a Data: "), this.scannerValidation.validateByteScanner(0, 100, "Digite a Linha de Produção: "));
                 System.out.println(consumo);
                 // Mostra o mesmo menu novamente
                 this.showReadMenu();
@@ -196,7 +197,7 @@ public class Menu {
             }
             case 3 -> {
                 // Realiza uma busca utilizando as chaves primárias da entidade e a retorna em seu específico objeto
-                Producao producao = producaoController.read(scannerValidation.validateSqlDateScanner("Digite a Data: "), scannerValidation.validateByteScanner(0, 100, "Digite a Linha de Produção: "));
+                Producao producao = producaoController.read(this.scannerValidation.validateSqlDateScanner("Digite a Data: "), this.scannerValidation.validateByteScanner(0, 100, "Digite a Linha de Produção: "));
                 System.out.println(producao);
                 // Mostra o mesmo menu novamente
                 this.showReadMenu();
@@ -210,7 +211,7 @@ public class Menu {
             }
             case 5 -> {
                 // Realiza uma busca utilizando as chaves primárias da entidade e a retorna em seu específico objeto
-                ObjetivoConsumoMax objetivoConsumoMax = objetivoConsumoMaxController.read(scannerValidation.validateSqlDateScanner("Digite a Data: "), scannerValidation.validateByteScanner(0, 100, "Digite a Linha de Produção: "));
+                ObjetivoConsumoMax objetivoConsumoMax = objetivoConsumoMaxController.read(this.scannerValidation.validateSqlDateScanner("Digite a Data: "), this.scannerValidation.validateByteScanner(0, 100, "Digite a Linha de Produção: "));
                 System.out.println(objetivoConsumoMax);
                 // Mostra o mesmo menu novamente
                 this.showReadMenu();
@@ -252,15 +253,19 @@ public class Menu {
                 """
         );
 
-        // Lista com os atributos da entidade a serem formatados
-        Object[] args = {consumo.getConsumo_turno1(),
-                consumo.getConsumo_turno2(),
-                consumo.getConsumo_turno3(),
-                consumo.getConsumo_un_turno1(),
-                consumo.getConsumo_un_turno2(),
-                consumo.getConsumo_un_turno3()};
-
-        System.out.print(messageFormat.format(args));
+        if (consumo != null) {
+            // Lista com os atributos da entidade a serem formatados
+            Object[] args = {consumo.getConsumo_turno1(),
+                    consumo.getConsumo_turno2(),
+                    consumo.getConsumo_turno3(),
+                    consumo.getConsumo_un_turno1(),
+                    consumo.getConsumo_un_turno2(),
+                    consumo.getConsumo_un_turno3()};
+            System.out.print(messageFormat.format(args));
+        } else {
+            System.out.println("Este registro de consumo não existe.");
+            this.showUpdateMenu();
+        }
     }
 
     // Mostra o menu de atualizações de consumo
@@ -269,7 +274,7 @@ public class Menu {
         this.showConsumo(consumo);
 
         // Define o limite das opções, uma mensagem e qual o tipo de dado será recebido do input
-        int input = scannerValidation.validateByteScanner(0, 9, "Sua Escolha: ");
+        int input = this.scannerValidation.validateByteScanner(0, 9, "Sua Escolha: ");
 
         // Switch case para definir qual ação será tomada
         switch (input) {
@@ -281,37 +286,37 @@ public class Menu {
             // Define as novas informações da entidade a ser alterada
             case 1 -> {
                 // Valida o tipo de dado escrito e o define no objeto
-                consumo.setConsumo_turno1(scannerValidation.validateDoubleScanner("O novo valor de consumo_turno1 será: "));
+                consumo.setConsumo_turno1(this.scannerValidation.validateDoubleScanner("O novo valor de consumo_turno1 será: "));
                 // Chama novamente o mesmo menu, porém com os dados pré-atualizados
                 this.showUpdateConsumo(consumo);
             }
             case 2 -> {
                 // Valida o tipo de dado escrito e o define no objeto
-                consumo.setConsumo_turno2(scannerValidation.validateDoubleScanner("O novo valor de consumo_turno2 será: "));
+                consumo.setConsumo_turno2(this.scannerValidation.validateDoubleScanner("O novo valor de consumo_turno2 será: "));
                 // Chama novamente o mesmo menu, porém com os dados pré-atualizados
                 this.showUpdateConsumo(consumo);
             }
             case 3 -> {
                 // Valida o tipo de dado escrito e o define no objeto
-                consumo.setConsumo_turno3(scannerValidation.validateDoubleScanner("O novo valor de consumo_turno3 será: "));
+                consumo.setConsumo_turno3(this.scannerValidation.validateDoubleScanner("O novo valor de consumo_turno3 será: "));
                 // Chama novamente o mesmo menu, porém com os dados pré-atualizados
                 this.showUpdateConsumo(consumo);
             }
             case 4 -> {
                 // Valida o tipo de dado escrito e o define no objeto
-                consumo.setConsumo_un_turno1(scannerValidation.validateDoubleScanner("O novo valor de consumo_un_turno1 será: "));
+                consumo.setConsumo_un_turno1(this.scannerValidation.validateDoubleScanner("O novo valor de consumo_un_turno1 será: "));
                 // Chama novamente o mesmo menu, porém com os dados pré-atualizados
                 this.showUpdateConsumo(consumo);
             }
             case 5 -> {
                 // Valida o tipo de dado escrito e o define no objeto
-                consumo.setConsumo_un_turno2(scannerValidation.validateDoubleScanner("O novo valor de consumo_un_turno2 será: "));
+                consumo.setConsumo_un_turno2(this.scannerValidation.validateDoubleScanner("O novo valor de consumo_un_turno2 será: "));
                 // Chama novamente o mesmo menu, porém com os dados pré-atualizados
                 this.showUpdateConsumo(consumo);
             }
             case 6 -> {
                 // Valida o tipo de dado escrito e o define no objeto
-                consumo.setConsumo_un_turno3(scannerValidation.validateDoubleScanner("O novo valor de consumo_un_turno3 será: "));
+                consumo.setConsumo_un_turno3(this.scannerValidation.validateDoubleScanner("O novo valor de consumo_un_turno3 será: "));
                 // Chama novamente o mesmo menu, porém com os dados pré-atualizados
                 this.showUpdateConsumo(consumo);
             }
@@ -347,11 +352,16 @@ public class Menu {
                 """
         );
 
-        // Lista com os atributos da entidade a serem formatados
-        Object[] args = {producao.getProducao_turno1(),
-                producao.getProducao_turno2(),
-                producao.getProducao_turno3()};
-        System.out.print(messageFormat.format(args));
+        if (producao != null) {
+            // Lista com os atributos da entidade a serem formatados
+            Object[] args = {producao.getProducao_turno1(),
+                    producao.getProducao_turno2(),
+                    producao.getProducao_turno3()};
+            System.out.print(messageFormat.format(args));
+        } else {
+            System.out.println("Este registro de Produção não existe.");
+            this.showUpdateMenu();
+        }
     }
 
     // Mostra o menu de atualizações de producao
@@ -360,7 +370,7 @@ public class Menu {
         this.showProducao(producao);
 
         // Define o limite das opções, uma mensagem e qual o tipo de dado será recebido do input
-        int input = scannerValidation.validateByteScanner(0, 5, "Sua Escolha: ");
+        int input = this.scannerValidation.validateByteScanner(0, 5, "Sua Escolha: ");
 
         // Switch case para definir qual ação será tomada
         switch (input) {
@@ -372,19 +382,19 @@ public class Menu {
             // Define as novas informações da entidade a ser alterada
             case 1 -> {
                 // Valida o tipo de dado escrito e o define no objeto
-                producao.setProducao_turno1(scannerValidation.validateDoubleScanner("O novo valor de producao_turno1 será: "));
+                producao.setProducao_turno1(this.scannerValidation.validateDoubleScanner("O novo valor de producao_turno1 será: "));
                 // Chama novamente o mesmo menu, porém com os dados pré-atualizados
                 this.showUpdateProducao(producao);
             }
             case 2 -> {
                 // Valida o tipo de dado escrito e o define no objeto
-                producao.setProducao_turno2(scannerValidation.validateDoubleScanner("O novo valor de producao_turno2 será: "));
+                producao.setProducao_turno2(this.scannerValidation.validateDoubleScanner("O novo valor de producao_turno2 será: "));
                 // Chama novamente o mesmo menu, porém com os dados pré-atualizados
                 this.showUpdateProducao(producao);
             }
             case 3 -> {
                 // Valida o tipo de dado escrito e o define no objeto
-                producao.setProducao_turno3(scannerValidation.validateDoubleScanner("O novo valor de producao_turno3 será: "));
+                producao.setProducao_turno3(this.scannerValidation.validateDoubleScanner("O novo valor de producao_turno3 será: "));
                 // Chama novamente o mesmo menu, porém com os dados pré-atualizados
                 this.showUpdateProducao(producao);
             }
@@ -423,14 +433,19 @@ public class Menu {
                 """
         );
 
-        // Lista com os atributos da entidade a serem formatados
-        Object[] args = {objetivoConsumoMax.getObjetivo1(),
-                objetivoConsumoMax.getObjetivo2(),
-                objetivoConsumoMax.getObjetivo3(),
-                objetivoConsumoMax.getDesperdicio_turno1(),
-                objetivoConsumoMax.getDesperdicio_turno2(),
-                objetivoConsumoMax.getDesperdicio_turno3()};
-        System.out.print(messageFormat.format(args));
+        if (objetivoConsumoMax != null) {
+            // Lista com os atributos da entidade a serem formatados
+            Object[] args = {objetivoConsumoMax.getObjetivo1(),
+                    objetivoConsumoMax.getObjetivo2(),
+                    objetivoConsumoMax.getObjetivo3(),
+                    objetivoConsumoMax.getDesperdicio_turno1(),
+                    objetivoConsumoMax.getDesperdicio_turno2(),
+                    objetivoConsumoMax.getDesperdicio_turno3()};
+            System.out.print(messageFormat.format(args));
+        } else {
+            System.out.println("Este registro de ObjetivoConsumoMax não existe.");
+            this.showUpdateMenu();
+        }
     }
 
     // Mostra o menu de atualizações de objetivoConsumoMax
@@ -439,7 +454,7 @@ public class Menu {
         this.showObjetivoConsumoMax(objetivoConsumoMax);
 
         // Define o limite das opções, uma mensagem e qual o tipo de dado será recebido do input
-        int input = scannerValidation.validateByteScanner(0, 9, "Sua Escolha: ");
+        int input = this.scannerValidation.validateByteScanner(0, 9, "Sua Escolha: ");
 
         // Switch case para definir qual ação será tomada
         switch (input) {
@@ -451,37 +466,37 @@ public class Menu {
             // Define as novas informações da entidade a ser alterada
             case 1 -> {
                 // Valida o tipo de dado escrito e o define no objeto
-                objetivoConsumoMax.setObjetivo1(scannerValidation.validateDoubleScanner("O novo valor de objetivo1 será: "));
+                objetivoConsumoMax.setObjetivo1(this.scannerValidation.validateDoubleScanner("O novo valor de objetivo1 será: "));
                 // Chama novamente o mesmo menu, porém com os dados pré-atualizados
                 this.showUpdateObjetivoConsumoMax(objetivoConsumoMax);
             }
             case 2 -> {
                 // Valida o tipo de dado escrito e o define no objeto
-                objetivoConsumoMax.setObjetivo2(scannerValidation.validateDoubleScanner("O novo valor de objetivo2 será: "));
+                objetivoConsumoMax.setObjetivo2(this.scannerValidation.validateDoubleScanner("O novo valor de objetivo2 será: "));
                 // Chama novamente o mesmo menu, porém com os dados pré-atualizados
                 this.showUpdateObjetivoConsumoMax(objetivoConsumoMax);
             }
             case 3 -> {
                 // Valida o tipo de dado escrito e o define no objeto
-                objetivoConsumoMax.setObjetivo3(scannerValidation.validateDoubleScanner("O novo valor de objetivo3 será: "));
+                objetivoConsumoMax.setObjetivo3(this.scannerValidation.validateDoubleScanner("O novo valor de objetivo3 será: "));
                 // Chama novamente o mesmo menu, porém com os dados pré-atualizados
                 this.showUpdateObjetivoConsumoMax(objetivoConsumoMax);
             }
             case 4 -> {
                 // Valida o tipo de dado escrito e o define no objeto
-                objetivoConsumoMax.setDesperdicio_turno1(scannerValidation.validateDoubleScanner("O novo valor de desperdicio_turno1 será: "));
+                objetivoConsumoMax.setDesperdicio_turno1(this.scannerValidation.validateDoubleScanner("O novo valor de desperdicio_turno1 será: "));
                 // Chama novamente o mesmo menu, porém com os dados pré-atualizados
                 this.showUpdateObjetivoConsumoMax(objetivoConsumoMax);
             }
             case 5 -> {
                 // Valida o tipo de dado escrito e o define no objeto
-                objetivoConsumoMax.setDesperdicio_turno2(scannerValidation.validateDoubleScanner("O novo valor de desperdicio_turno2 será: "));
+                objetivoConsumoMax.setDesperdicio_turno2(this.scannerValidation.validateDoubleScanner("O novo valor de desperdicio_turno2 será: "));
                 // Chama novamente o mesmo menu, porém com os dados pré-atualizados
                 this.showUpdateObjetivoConsumoMax(objetivoConsumoMax);
             }
             case 6 -> {
                 // Valida o tipo de dado escrito e o define no objeto
-                objetivoConsumoMax.setDesperdicio_turno3(scannerValidation.validateDoubleScanner("O novo valor de desperdicio_turno3 será: "));
+                objetivoConsumoMax.setDesperdicio_turno3(this.scannerValidation.validateDoubleScanner("O novo valor de desperdicio_turno3 será: "));
                 // Chama novamente o mesmo menu, porém com os dados pré-atualizados
                 this.showUpdateObjetivoConsumoMax(objetivoConsumoMax);
             }
@@ -517,7 +532,7 @@ public class Menu {
         );
 
         // Define o limite das opções, uma mensagem e qual o tipo de dado será recebido do input
-        int input = scannerValidation.validateByteScanner(0, 4, "Sua Escolha: ");
+        int input = this.scannerValidation.validateByteScanner(0, 4, "Sua Escolha: ");
 
         // Switch case para definir qual ação será tomada
         switch (input) {
@@ -529,7 +544,7 @@ public class Menu {
             // Escolhe qual entidade será atualizada
             case 1 -> {
                 // Lê a entidade a ser atualizada a partir de suas chaves principais
-                Consumo consumo = consumoController.read(scannerValidation.validateSqlDateScanner("Data do consumo que deseja alterar: "), scannerValidation.validateByteScanner(1, 100, "Linha de Produção do Consumo que deseja alterar: "));
+                Consumo consumo = consumoController.read(this.scannerValidation.validateSqlDateScanner("Data do consumo que deseja alterar: "), this.scannerValidation.validateByteScanner(1, 100, "Linha de Produção do Consumo que deseja alterar: "));
                 // Chama o menu com os atributos que podem ser atualizados
                 this.showUpdateConsumo(consumo);
                 // Retorna ao mesmo menu
@@ -537,7 +552,7 @@ public class Menu {
             }
             case 2 -> {
                 // Lê a entidade a ser atualizada a partir de suas chaves principais
-                Producao producao = producaoController.read(scannerValidation.validateSqlDateScanner("Data da producao que deseja alterar: "), scannerValidation.validateByteScanner(1, 100, "Linha de Produção do Consumo que deseja alterar: "));
+                Producao producao = producaoController.read(this.scannerValidation.validateSqlDateScanner("Data da producao que deseja alterar: "), this.scannerValidation.validateByteScanner(1, 100, "Linha de Produção do Consumo que deseja alterar: "));
                 // Chama o menu com os atributos que podem ser atualizados
                 this.showUpdateProducao(producao);
                 // Retorna ao mesmo menu
@@ -545,7 +560,7 @@ public class Menu {
             }
             case 3 -> {
                 // Lê a entidade a ser atualizada a partir de suas chaves principais
-                ObjetivoConsumoMax objetivoConsumoMax = objetivoConsumoMaxController.read(scannerValidation.validateSqlDateScanner("Data do objetivoConsumoMax que deseja alterar: "), scannerValidation.validateByteScanner(1, 100, "Linha de Produção do Consumo que deseja alterar: "));
+                ObjetivoConsumoMax objetivoConsumoMax = objetivoConsumoMaxController.read(this.scannerValidation.validateSqlDateScanner("Data do objetivoConsumoMax que deseja alterar: "), this.scannerValidation.validateByteScanner(1, 100, "Linha de Produção do Consumo que deseja alterar: "));
                 // Chama o menu com os atributos que podem ser atualizados
                 this.showUpdateObjetivoConsumoMax(objetivoConsumoMax);
                 // Retorna ao mesmo menu
@@ -578,7 +593,7 @@ public class Menu {
         );
 
         // Define o limite das opções, uma mensagem e qual o tipo de dado será recebido do input
-        int input = scannerValidation.validateByteScanner(0, 5, "Sua Escolha: ");
+        int input = this.scannerValidation.validateByteScanner(0, 5, "Sua Escolha: ");
 
         // Switch case para definir qual ação será tomada
         switch (input) {
@@ -590,8 +605,8 @@ public class Menu {
             // Seleciona qual(is) entidade(s) serão deletadas
             case 1 -> {
                 // Busca a entidade a partir das chaves primárias para deletá-la
-                Date reqDate = scannerValidation.validateSqlDateScanner("Data do consumo que deseja deletar: ");
-                byte reqLinha_producao = scannerValidation.validateByteScanner(1, 100, "Linha de Produção do Consumo que deseja deletar: ");
+                Date reqDate = this.scannerValidation.validateSqlDateScanner("Data do consumo que deseja deletar: ");
+                byte reqLinha_producao = this.scannerValidation.validateByteScanner(1, 100, "Linha de Produção do Consumo que deseja deletar: ");
                 Consumo consumo = consumoController.read(reqDate, reqLinha_producao);
                 Producao producao = producaoController.read(reqDate, reqLinha_producao);
                 ObjetivoConsumoMax objetivoConsumoMax = objetivoConsumoMaxController.read(reqDate, reqLinha_producao);
@@ -603,8 +618,8 @@ public class Menu {
             }
             case 2 -> {
                 // Busca a entidade a partir das chaves primárias para deletá-la
-                Date reqDate = scannerValidation.validateSqlDateScanner("Data do consumo que deseja deletar: ");
-                byte reqLinha_producao = scannerValidation.validateByteScanner(1, 100, "Linha de Produção do Consumo que deseja deletar: ");
+                Date reqDate = this.scannerValidation.validateSqlDateScanner("Data do consumo que deseja deletar: ");
+                byte reqLinha_producao = this.scannerValidation.validateByteScanner(1, 100, "Linha de Produção do Consumo que deseja deletar: ");
                 Consumo consumo = consumoController.read(reqDate, reqLinha_producao);
                 // Se o objeto foi encontrado, deleta o mesmo
                 if (consumo != null)
@@ -615,7 +630,7 @@ public class Menu {
             }
             case 3 -> {
                 // Busca a entidade a partir das chaves primárias para deletá-la
-                Producao producao = producaoController.read(scannerValidation.validateSqlDateScanner("Data da producao que deseja deletar: "), scannerValidation.validateByteScanner(1, 100, "Linha de Produção do Consumo que deseja deletar: "));
+                Producao producao = producaoController.read(this.scannerValidation.validateSqlDateScanner("Data da producao que deseja deletar: "), this.scannerValidation.validateByteScanner(1, 100, "Linha de Produção do Consumo que deseja deletar: "));
                 // Se o objeto foi encontrado, deleta o mesmo
                 if (producao != null)
                     producaoController.delete(producao);
@@ -624,7 +639,7 @@ public class Menu {
             }
             case 4 -> {
                 // Busca a entidade a partir das chaves primárias para deletá-la
-                ObjetivoConsumoMax objetivoConsumoMax = objetivoConsumoMaxController.read(scannerValidation.validateSqlDateScanner("Data do objetivoConsumoMax que deseja deletar: "), scannerValidation.validateByteScanner(1, 100, "Linha de Produção do Consumo que deseja deletar: "));
+                ObjetivoConsumoMax objetivoConsumoMax = objetivoConsumoMaxController.read(this.scannerValidation.validateSqlDateScanner("Data do objetivoConsumoMax que deseja deletar: "), this.scannerValidation.validateByteScanner(1, 100, "Linha de Produção do Consumo que deseja deletar: "));
                 // Se o objeto foi encontrado, deleta o mesmo
                 if (objetivoConsumoMax != null)
                     objetivoConsumoMaxController.delete(objetivoConsumoMax);
